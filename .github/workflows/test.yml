@@ -1,0 +1,23 @@
+name: CI
+
+on: [push]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Run lint
+        run: ./gradlew turbo:lint
+
+      - name: Run tests
+        run: ./gradlew testRelease
+
+      - name: Archive test results
+        uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          name: test-results-report
+          path: turbo/build/reports/tests/testReleaseUnitTest

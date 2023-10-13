@@ -24,6 +24,7 @@ import dev.hotwire.turbo.visit.TurboVisitAction
 import dev.hotwire.turbo.visit.TurboVisitOptions
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import android.util.Log
 import kotlin.random.Random
 
 /**
@@ -187,6 +188,7 @@ internal class TurboWebFragmentDelegate(
     override fun pageInvalidated() {}
 
     override fun visitLocationStarted(location: String) {
+        Log.d("navigate activity visitLocationStarted", "navigate")
         callback.onVisitStarted(location)
 
         if (isWebViewAttachedToNewDestination) {
@@ -222,6 +224,7 @@ internal class TurboWebFragmentDelegate(
     }
 
     override fun onReceivedHttpAuthRequest(handler: HttpAuthHandler, host: String, realm: String) {
+        Log.d("navigate activity onReceivedHttpAuthRequest", "navigate")
         callback.onReceivedHttpAuthRequest(handler, host, realm)
     }
 
@@ -229,10 +232,12 @@ internal class TurboWebFragmentDelegate(
         location: String,
         options: TurboVisitOptions
     ) {
+        Log.d("navigate activity visitProposedToLocation", "navigate")
         navigator.navigate(location, options)
     }
 
     override fun visitNavDestination(): TurboNavDestination {
+        Log.d("navigate activity visitNavDestination", "navigate")
         return navDestination
     }
 
@@ -343,6 +348,7 @@ internal class TurboWebFragmentDelegate(
     }
 
     private fun visit(location: String, restoreWithCachedSnapshot: Boolean, reload: Boolean) {
+        Log.d("navigate activity visit", "navigate")
         val restore = restoreWithCachedSnapshot && !reload
         val options = when {
             restore -> TurboVisitOptions(action = TurboVisitAction.RESTORE)

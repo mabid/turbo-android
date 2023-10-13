@@ -2,6 +2,7 @@ package dev.hotwire.turbo.delegates
 
 import android.os.Bundle
 import androidx.annotation.IdRes
+import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import dev.hotwire.turbo.nav.TurboNavDestination
@@ -54,6 +55,7 @@ class TurboNestedFragmentDelegate(val fragment: Fragment, navHostFragmentId: Int
         options: TurboVisitOptions = TurboVisitOptions(),
         bundle: Bundle? = null
     ) {
+        Log.d("navigate activity currentNavDestination", "navigate")
         currentNavDestination.navigate(location, options, bundle)
     }
 

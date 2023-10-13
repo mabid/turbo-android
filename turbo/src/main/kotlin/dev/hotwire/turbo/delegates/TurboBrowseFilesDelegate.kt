@@ -11,6 +11,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
+import android.util.Log
 
 internal class TurboBrowseFilesDelegate(val context: Context) : CoroutineScope {
     override val coroutineContext: CoroutineContext
@@ -29,6 +30,7 @@ internal class TurboBrowseFilesDelegate(val context: Context) : CoroutineScope {
     }
 
     fun handleResult(intent: Intent?, onResult: (Array<Uri>?) -> Unit) {
+        Log.d("navigate activity handleResult", "navigate")
         if (intent == null) {
             onResult(null)
             return

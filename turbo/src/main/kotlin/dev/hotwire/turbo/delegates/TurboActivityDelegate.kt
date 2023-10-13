@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.addCallback
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
+import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import dev.hotwire.turbo.nav.TurboNavDestination
@@ -104,6 +105,7 @@ class TurboActivityDelegate(
         options: TurboVisitOptions = TurboVisitOptions(),
         bundle: Bundle? = null
     ) {
+        Log.d("navigate activity delegate", "navigate")
         currentNavDestination?.navigate(location, options, bundle)
     }
 

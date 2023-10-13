@@ -105,7 +105,7 @@
         }
       }
 
-      TurboSession.visitProposedToLocation(location.toString(), JSON.stringify(options))
+      // TurboSession.visitProposedToLocation(location.toString(), JSON.stringify(options))
     }
 
     // Turbolinks 5

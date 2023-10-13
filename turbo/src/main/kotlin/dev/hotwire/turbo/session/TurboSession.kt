@@ -608,7 +608,7 @@ class TurboSession constructor(
 
     // Classes and objects
 
-    private inner class TurboWebViewClient : WebViewClient() {
+    private inner class TurboWebViewClient : WebViewClientCompat() {
         private var initialScaleChanged = false
         private var initialScale = 0f
 
@@ -680,6 +680,13 @@ class TurboSession constructor(
          * redirect while cold booting.
          * http://stackoverflow.com/a/6739042/3280911
          */
+
+         override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
+            // Handle the URL for older versions here
+            Log.d("CHUTIYAPA", "WHY YOU DO DIS")
+            return true
+        }
+
         override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
             val location = request.url.toString()
             val isHttpRequest = request.isHttpGetRequest()

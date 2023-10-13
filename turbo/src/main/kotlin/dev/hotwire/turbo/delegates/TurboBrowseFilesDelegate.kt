@@ -30,7 +30,7 @@ internal class TurboBrowseFilesDelegate(val context: Context) : CoroutineScope {
     }
 
     fun handleResult(intent: Intent?, onResult: (Array<Uri>?) -> Unit) {
-        Log.d("navigate activity handleResult", "navigate")
+        Log.d("CHUTIYAPA", "handleResult")
         if (intent == null) {
             onResult(null)
             return

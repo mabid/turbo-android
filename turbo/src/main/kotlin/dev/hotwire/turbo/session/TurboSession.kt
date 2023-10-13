@@ -147,7 +147,7 @@ class TurboSession constructor(
 
     fun visit(visit: TurboVisit) {
         this.currentVisit = visit
-        Log.d("TurboVisit", "in visit")
+        Log.d("CHUTIYAPA", "in visit")
         callback { it.visitLocationStarted(visit.location) }
 
         if (visit.reload) {
@@ -210,7 +210,7 @@ class TurboSession constructor(
     fun visitProposedToLocation(location: String, optionsJson: String) {
         val options = TurboVisitOptions.fromJSON(optionsJson) ?: return
 
-        Log.d("visitProposedToLocationIn", "in location")
+        Log.d("CHUTIYAPA", "in visitProposedToLocation")
         logEvent("visitProposedToLocation", "location" to location, "options" to options)
         callback { it.visitProposedToLocation(location, options) }
     }
@@ -233,7 +233,7 @@ class TurboSession constructor(
             "visitHasCachedSnapshot" to visitHasCachedSnapshot
         )
 
-        Log.d("visitStartedIn", "in location")
+        Log.d("CHUTIYAPA", "in visitStarted")
 
         currentVisit?.identifier = visitIdentifier
     }
@@ -245,7 +245,7 @@ class TurboSession constructor(
      */
     @JavascriptInterface
     fun visitRequestStarted(visitIdentifier: String) {
-      Log.d("visitRequestStartedIn", "in location")
+      Log.d("CHUTIYAPA", "in visitRequestStarted")
         logEvent("visitRequestStarted", "visitIdentifier" to visitIdentifier)
     }
 
@@ -256,7 +256,7 @@ class TurboSession constructor(
      */
     @JavascriptInterface
     fun visitRequestCompleted(visitIdentifier: String) {
-      Log.d("visitRequestCompleted", "in location")
+      Log.d("CHUTIYAPA", "in visitRequestCompleted")
         logEvent("visitRequestCompleted", "visitIdentifier" to visitIdentifier)
     }
 
@@ -279,7 +279,7 @@ class TurboSession constructor(
             "statusCode" to statusCode
         )
 
-        Log.d("visitRequestFailedWithStatusCode", "in location")
+        Log.d("CHUTIYAPA", "in visitRequestFailedWithStatusCode")
 
         currentVisit?.let { visit ->
             if (visitIdentifier == visit.identifier) {
@@ -420,7 +420,7 @@ class TurboSession constructor(
     @JavascriptInterface
     fun pageInvalidated() {
         logEvent("pageInvalidated")
-        Log.d("pageInvalidated", "in location")
+        Log.d("CHUTIYAPA", "in pageInvalidated")
 
         currentVisit?.let { visit ->
             callback {
@@ -477,7 +477,7 @@ class TurboSession constructor(
     // Private
 
     private fun visitLocation(visit: TurboVisit) {
-      Log.d("visitLocation TurboVisit", "in TurboVisit")
+      Log.d("CHUTIYAPA", "in visitLocation")
         val restorationIdentifier = when (visit.options.action) {
             TurboVisitAction.RESTORE -> restorationIdentifiers[visit.destinationIdentifier] ?: ""
             TurboVisitAction.ADVANCE -> ""
@@ -500,7 +500,7 @@ class TurboSession constructor(
     }
 
     private fun visitLocationAsColdBoot(visit: TurboVisit) {
-      Log.d("visitLocationAsColdBoot", "in TurboVisit")
+      Log.d("CHUTIYAPA", "in visitLocationAsColdBoot")
         logEvent("visitLocationAsColdBoot", "location" to visit.location)
         isColdBooting = true
 
@@ -517,14 +517,14 @@ class TurboSession constructor(
 
     private fun visitPendingLocation(visit: TurboVisit) {
         logEvent("visitPendingLocation", "location" to visit.location)
-        Log.d("visitPendingLocation", "in TurboVisit")
+        Log.d("CHUTIYAPA", "in visitPendingLocation")
         visitLocation(visit)
         visitPending = false
     }
 
     private fun renderVisitForColdBoot() {
         logEvent("renderVisitForColdBoot", "coldBootVisitIdentifier" to coldBootVisitIdentifier)
-        Log.d("renderVisitForColdBoot", "in TurboVisit")
+        Log.d("CHUTIYAPA", "in renderVisitForColdBoot")
         webView.visitRenderedForColdBoot(coldBootVisitIdentifier)
 
         currentVisit?.let { visit ->
@@ -599,7 +599,7 @@ class TurboSession constructor(
     }
 
     private fun logEvent(event: String, vararg params: Pair<String, Any>) {
-      Log.d("logEvent", "in start $event")
+      Log.d("CHUTIYAPA", "in start logEvent")
         val attributes = params.toMutableList().apply { add(0, "session" to sessionName) }
         logEvent(event, attributes)
     }
@@ -612,7 +612,7 @@ class TurboSession constructor(
         private var initialScale = 0f
 
         override fun onPageStarted(view: WebView, location: String, favicon: Bitmap?) {
-          Log.d("onPageStarted", "in start")
+          Log.d("CHUTIYAPA", "in onPageStarted")
             logEvent("onPageStarted", "location" to location)
             callback { it.onPageStarted(location) }
             coldBootVisitIdentifier = ""
@@ -620,7 +620,7 @@ class TurboSession constructor(
         }
 
         override fun onPageFinished(view: WebView, location: String) {
-          Log.d("onPageFinished", "in start")
+          Log.d("CHUTIYAPA", "in onPageFinished")
             if (coldBootVisitIdentifier == location.identifier()) {
                 // If we got here, onPageFinished() has already been called for
                 // this location so bail. It's common for onPageFinished()
@@ -643,7 +643,7 @@ class TurboSession constructor(
         }
 
         override fun onPageCommitVisible(view: WebView, location: String) {
-          Log.d("onPageCommitVisible", "in start")
+          Log.d("CHUTIYAPA", "in onPageCommitVisible")
             super.onPageCommitVisible(view, location)
             logEvent("onPageCommitVisible", "location" to location, "progress" to view.progress)
         }
@@ -684,17 +684,17 @@ class TurboSession constructor(
             val isHttpRequest = request.isHttpGetRequest()
             val isColdBootRedirect = isHttpRequest && isColdBooting && currentVisit?.location != location
             val shouldOverride = isReady || isColdBootRedirect
-            Log.d("shouldOverrideUrlLoading", "in start")
+            Log.d("CHUTIYAPA", "in shouldOverrideUrlLoading")
 
             // Don't allow onPageFinished to process its
             // callbacks if a cold boot was blocked.
             if (isColdBootRedirect) {
-              Log.d("shouldOverrideUrlLoading", "isColdBootRedirect")
+              Log.d("CHUTIYAPA", "isColdBootRedirect")
                 logEvent("coldBootRedirect", "location" to location)
                 reset()
             }
 
-            Log.d("shouldOverrideUrlLoading", "OUTSIDE")
+            Log.d("CHUTIYAPA", "OUTSIDE")
 
             val willProposeVisit = isColdBootRedirect || shouldProposeThrottledVisit()
             if (location.contains("clouddentistry") || location.contains("ngrok")){
@@ -707,11 +707,11 @@ class TurboSession constructor(
                   }
                   visitProposedToLocation(location, options.toJson())
               }
-              Log.d("shouldOverrideUrlLoading", "INSIDE")
+              Log.d("CHUTIYAPA", "INSIDE")
 
             }
             else {
-              Log.d("shouldOverrideUrlLoading", "SHAGUFTA")
+              Log.d("CHUTIYAPA", "SHAGUFTA")
 
               val intent = Intent(Intent.ACTION_VIEW, Uri.parse(location))
               view.context.startActivity(intent)
@@ -729,7 +729,7 @@ class TurboSession constructor(
         }
 
         override fun onReceivedHttpAuthRequest(view: WebView, handler: HttpAuthHandler, host: String, realm: String) {
-          Log.d("onReceivedHttpAuthRequest", "in TurboVisit")
+          Log.d("CHUTIYAPA", "in onReceivedHttpAuthRequest")
             callback { it.onReceivedHttpAuthRequest(handler, host, realm) }
         }
 
@@ -739,7 +739,7 @@ class TurboSession constructor(
         }
 
         override fun onReceivedError(view: WebView, request: WebResourceRequest, error: WebResourceErrorCompat) {
-          Log.d("onReceivedError", "in TurboVisit")
+          Log.d("CHUTIYAPA", "in onReceivedError")
             super.onReceivedError(view, request, error)
 
             if (request.isForMainFrame && isFeatureSupported(WEB_RESOURCE_ERROR_GET_CODE)) {
@@ -750,7 +750,7 @@ class TurboSession constructor(
         }
 
         override fun onReceivedHttpError(view: WebView, request: WebResourceRequest, errorResponse: WebResourceResponse) {
-          Log.d("onReceivedHttpError", "in TurboVisit")
+          Log.d("CHUTIYAPA", "in onReceivedHttpError")
             super.onReceivedHttpError(view, request, errorResponse)
 
             if (request.isForMainFrame) {
@@ -761,7 +761,7 @@ class TurboSession constructor(
         }
 
         override fun onReceivedSslError(view: WebView, handler: SslErrorHandler, error: SslError) {
-          Log.d("onReceivedSslError", "in TurboVisit")
+          Log.d("CHUTIYAPA", "in onReceivedSslError")
             super.onReceivedSslError(view, handler, error)
             handler.cancel()
 
@@ -772,7 +772,7 @@ class TurboSession constructor(
 
         @TargetApi(Build.VERSION_CODES.O)
         override fun onRenderProcessGone(view: WebView, detail: RenderProcessGoneDetail): Boolean {
-          Log.d("onRenderProcessGone", "in TurboVisit")
+          Log.d("CHUTIYAPA", "in onRenderProcessGone")
             logEvent("onRenderProcessGone", "didCrash" to detail.didCrash())
 
             if (view == webView) {

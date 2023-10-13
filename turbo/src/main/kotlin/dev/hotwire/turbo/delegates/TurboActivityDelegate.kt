@@ -105,7 +105,7 @@ class TurboActivityDelegate(
         options: TurboVisitOptions = TurboVisitOptions(),
         bundle: Bundle? = null
     ) {
-        Log.d("navigate activity delegate", "navigate")
+        Log.d("CHUTIYAPA", "navigate")
         currentNavDestination?.navigate(location, options, bundle)
     }
 

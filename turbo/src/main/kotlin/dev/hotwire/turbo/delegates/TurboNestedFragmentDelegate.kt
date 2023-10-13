@@ -55,7 +55,7 @@ class TurboNestedFragmentDelegate(val fragment: Fragment, navHostFragmentId: Int
         options: TurboVisitOptions = TurboVisitOptions(),
         bundle: Bundle? = null
     ) {
-        Log.d("navigate activity currentNavDestination", "navigate")
+        Log.d("CHUTIYAPA", "navigate")
         currentNavDestination.navigate(location, options, bundle)
     }
 

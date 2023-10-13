@@ -132,7 +132,7 @@ interface TurboNavDestination {
      * Turbo navigation flow).
      */
     fun shouldNavigateTo(newLocation: String): Boolean {
-        Log.d("shouldNavigateTo", "in Navigate")
+        Log.d("CHUTIYAPA", "in Navigate")
         return try {
             URL(newLocation)
             true
@@ -156,7 +156,7 @@ interface TurboNavDestination {
         bundle: Bundle? = null,
         extras: FragmentNavigator.Extras? = null
     ) {
-        Log.d("navigate", "in Navigate")
+        Log.d("CHUTIYAPA", "in Navigate")
         navigator.navigate(location, options, bundle, extras)
     }
 
@@ -169,7 +169,7 @@ interface TurboNavDestination {
         newLocation: String,
         newPathProperties: TurboPathConfigurationProperties
     ): NavOptions {
-        Log.d("getNavigationOptions", "in Navigate")
+        Log.d("CHUTIYAPA", "in getNavigationOptions")
         return navOptions {
             anim {
                 enter = R.anim.nav_default_enter_anim

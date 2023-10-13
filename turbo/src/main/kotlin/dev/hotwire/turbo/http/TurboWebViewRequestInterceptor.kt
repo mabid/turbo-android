@@ -13,7 +13,7 @@ internal class TurboWebViewRequestInterceptor(val session: TurboSession) {
     private val currentVisit get() = session.currentVisit
 
     fun interceptRequest(request: WebResourceRequest): WebResourceResponse? {
-        Log.d("TurboWebViewRequestInterceptor", "interceptRequest")
+        Log.d("CHUTIYAPA", "interceptRequest")
         val requestHandler = offlineRequestHandler ?: return null
 
         if (!shouldInterceptRequest(request)) {

@@ -28,6 +28,7 @@ import dev.hotwire.turbo.views.TurboWebView
 import dev.hotwire.turbo.visit.TurboVisit
 import dev.hotwire.turbo.visit.TurboVisitAction
 import dev.hotwire.turbo.visit.TurboVisitOptions
+import android.util.Log
 import kotlinx.coroutines.*
 import java.util.*
 
@@ -673,7 +674,8 @@ class TurboSession constructor(
                 logEvent("coldBootRedirect", "location" to location)
                 reset()
             }
-            println("OUTSIDE shouldOverrideUrlLoading")
+
+            Log.d("shouldOverrideUrlLoading", "OUTSIDE")
 
             val willProposeVisit = isColdBootRedirect || shouldProposeThrottledVisit()
             if (location.contains("clouddentistry") || location.contains("ngrok")){
@@ -686,10 +688,12 @@ class TurboSession constructor(
                   }
                   visitProposedToLocation(location, options.toJson())
               }
-              println("INSIDE shouldOverrideUrlLoading")
+              Log.d("shouldOverrideUrlLoading", "INSIDE")
+
             }
             else {
-              println("SHAGUFTA shouldOverrideUrlLoading")
+              Log.d("shouldOverrideUrlLoading", "SHAGUFTA")
+
               val intent = Intent(Intent.ACTION_VIEW, Uri.parse(location))
               view.context.startActivity(intent)
             }

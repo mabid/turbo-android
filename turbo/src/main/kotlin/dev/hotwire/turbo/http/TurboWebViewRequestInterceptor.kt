@@ -5,6 +5,7 @@ import android.webkit.WebResourceResponse
 import dev.hotwire.turbo.session.TurboSession
 import dev.hotwire.turbo.util.isHttpGetRequest
 import dev.hotwire.turbo.util.logEvent
+import android.util.Log
 
 internal class TurboWebViewRequestInterceptor(val session: TurboSession) {
     private val offlineRequestHandler get() = session.offlineRequestHandler
@@ -12,6 +13,7 @@ internal class TurboWebViewRequestInterceptor(val session: TurboSession) {
     private val currentVisit get() = session.currentVisit
 
     fun interceptRequest(request: WebResourceRequest): WebResourceResponse? {
+        Log.d("TurboWebViewRequestInterceptor", "interceptRequest")
         val requestHandler = offlineRequestHandler ?: return null
 
         if (!shouldInterceptRequest(request)) {

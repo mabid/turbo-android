@@ -673,6 +673,7 @@ class TurboSession constructor(
                 logEvent("coldBootRedirect", "location" to location)
                 reset()
             }
+            println("OUTSIDE shouldOverrideUrlLoading")
 
             val willProposeVisit = isColdBootRedirect || shouldProposeThrottledVisit()
             if (location.contains("clouddentistry") || location.contains("ngrok")){
@@ -685,8 +686,10 @@ class TurboSession constructor(
                   }
                   visitProposedToLocation(location, options.toJson())
               }
+              println("INSIDE shouldOverrideUrlLoading")
             }
             else {
+              println("SHAGUFTA shouldOverrideUrlLoading")
               val intent = Intent(Intent.ACTION_VIEW, Uri.parse(location))
               view.context.startActivity(intent)
             }

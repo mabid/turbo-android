@@ -599,6 +599,7 @@ class TurboSession constructor(
     }
 
     private fun logEvent(event: String, vararg params: Pair<String, Any>) {
+      Log.d("logEvent", "in start $event")
         val attributes = params.toMutableList().apply { add(0, "session" to sessionName) }
         logEvent(event, attributes)
     }
@@ -611,6 +612,7 @@ class TurboSession constructor(
         private var initialScale = 0f
 
         override fun onPageStarted(view: WebView, location: String, favicon: Bitmap?) {
+          Log.d("onPageStarted", "in start")
             logEvent("onPageStarted", "location" to location)
             callback { it.onPageStarted(location) }
             coldBootVisitIdentifier = ""
@@ -618,6 +620,7 @@ class TurboSession constructor(
         }
 
         override fun onPageFinished(view: WebView, location: String) {
+          Log.d("onPageFinished", "in start")
             if (coldBootVisitIdentifier == location.identifier()) {
                 // If we got here, onPageFinished() has already been called for
                 // this location so bail. It's common for onPageFinished()
@@ -640,6 +643,7 @@ class TurboSession constructor(
         }
 
         override fun onPageCommitVisible(view: WebView, location: String) {
+          Log.d("onPageCommitVisible", "in start")
             super.onPageCommitVisible(view, location)
             logEvent("onPageCommitVisible", "location" to location, "progress" to view.progress)
         }
@@ -735,6 +739,7 @@ class TurboSession constructor(
         }
 
         override fun onReceivedError(view: WebView, request: WebResourceRequest, error: WebResourceErrorCompat) {
+          Log.d("onReceivedError", "in TurboVisit")
             super.onReceivedError(view, request, error)
 
             if (request.isForMainFrame && isFeatureSupported(WEB_RESOURCE_ERROR_GET_CODE)) {
@@ -745,6 +750,7 @@ class TurboSession constructor(
         }
 
         override fun onReceivedHttpError(view: WebView, request: WebResourceRequest, errorResponse: WebResourceResponse) {
+          Log.d("onReceivedHttpError", "in TurboVisit")
             super.onReceivedHttpError(view, request, errorResponse)
 
             if (request.isForMainFrame) {
@@ -755,6 +761,7 @@ class TurboSession constructor(
         }
 
         override fun onReceivedSslError(view: WebView, handler: SslErrorHandler, error: SslError) {
+          Log.d("onReceivedSslError", "in TurboVisit")
             super.onReceivedSslError(view, handler, error)
             handler.cancel()
 
@@ -765,6 +772,7 @@ class TurboSession constructor(
 
         @TargetApi(Build.VERSION_CODES.O)
         override fun onRenderProcessGone(view: WebView, detail: RenderProcessGoneDetail): Boolean {
+          Log.d("onRenderProcessGone", "in TurboVisit")
             logEvent("onRenderProcessGone", "didCrash" to detail.didCrash())
 
             if (view == webView) {

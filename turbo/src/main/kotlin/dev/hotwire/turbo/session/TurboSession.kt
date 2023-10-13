@@ -1,6 +1,10 @@
 package dev.hotwire.turbo.session
 
+
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.net.Uri
+
 import android.annotation.TargetApi
 import android.content.Context
 import android.graphics.Bitmap
@@ -671,14 +675,20 @@ class TurboSession constructor(
             }
 
             val willProposeVisit = isColdBootRedirect || shouldProposeThrottledVisit()
-            if (shouldOverride && willProposeVisit) {
-                // Replace the cold boot destination on a redirect
-                // since the original url isn't visitable.
-                val options = when (isColdBootRedirect) {
-                    true -> TurboVisitOptions(action = TurboVisitAction.REPLACE)
-                    else -> TurboVisitOptions(action = TurboVisitAction.ADVANCE)
-                }
-                visitProposedToLocation(location, options.toJson())
+            if (location.contains("clouddentistry") || location.contains("ngrok")){
+              if (shouldOverride && willProposeVisit) {
+                  // Replace the cold boot destination on a redirect
+                  // since the original url isn't visitable.
+                  val options = when (isColdBootRedirect) {
+                      true -> TurboVisitOptions(action = TurboVisitAction.REPLACE)
+                      else -> TurboVisitOptions(action = TurboVisitAction.ADVANCE)
+                  }
+                  visitProposedToLocation(location, options.toJson())
+              }
+            }
+            else {
+              val intent = Intent(Intent.ACTION_VIEW, Uri.parse(location))
+              view.context.startActivity(intent)
             }
 
             logEvent(

@@ -2,6 +2,7 @@ package dev.hotwire.turbo.session
 
 
 import android.annotation.SuppressLint
+import android.webkit.WebViewClient
 import android.content.Intent
 import android.net.Uri
 
@@ -607,7 +608,7 @@ class TurboSession constructor(
 
     // Classes and objects
 
-    private inner class TurboWebViewClient : WebViewClientCompat() {
+    private inner class TurboWebViewClient : WebViewClient() {
         private var initialScaleChanged = false
         private var initialScale = 0f
 

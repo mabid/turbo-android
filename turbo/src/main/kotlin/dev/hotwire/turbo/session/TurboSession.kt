@@ -147,6 +147,7 @@ class TurboSession constructor(
 
     fun visit(visit: TurboVisit) {
         this.currentVisit = visit
+        Log.d("TurboVisit", "in visit")
         callback { it.visitLocationStarted(visit.location) }
 
         if (visit.reload) {
@@ -209,6 +210,7 @@ class TurboSession constructor(
     fun visitProposedToLocation(location: String, optionsJson: String) {
         val options = TurboVisitOptions.fromJSON(optionsJson) ?: return
 
+        Log.d("visitProposedToLocationIn", "in location")
         logEvent("visitProposedToLocation", "location" to location, "options" to options)
         callback { it.visitProposedToLocation(location, options) }
     }
@@ -231,6 +233,8 @@ class TurboSession constructor(
             "visitHasCachedSnapshot" to visitHasCachedSnapshot
         )
 
+        Log.d("visitStartedIn", "in location")
+
         currentVisit?.identifier = visitIdentifier
     }
 
@@ -241,6 +245,7 @@ class TurboSession constructor(
      */
     @JavascriptInterface
     fun visitRequestStarted(visitIdentifier: String) {
+      Log.d("visitRequestStartedIn", "in location")
         logEvent("visitRequestStarted", "visitIdentifier" to visitIdentifier)
     }
 
@@ -251,6 +256,7 @@ class TurboSession constructor(
      */
     @JavascriptInterface
     fun visitRequestCompleted(visitIdentifier: String) {
+      Log.d("visitRequestCompleted", "in location")
         logEvent("visitRequestCompleted", "visitIdentifier" to visitIdentifier)
     }
 
@@ -272,6 +278,8 @@ class TurboSession constructor(
             "visitHasCachedSnapshot" to visitHasCachedSnapshot,
             "statusCode" to statusCode
         )
+
+        Log.d("visitRequestFailedWithStatusCode", "in location")
 
         currentVisit?.let { visit ->
             if (visitIdentifier == visit.identifier) {
@@ -412,6 +420,7 @@ class TurboSession constructor(
     @JavascriptInterface
     fun pageInvalidated() {
         logEvent("pageInvalidated")
+        Log.d("pageInvalidated", "in location")
 
         currentVisit?.let { visit ->
             callback {
@@ -468,6 +477,7 @@ class TurboSession constructor(
     // Private
 
     private fun visitLocation(visit: TurboVisit) {
+      Log.d("visitLocation TurboVisit", "in TurboVisit")
         val restorationIdentifier = when (visit.options.action) {
             TurboVisitAction.RESTORE -> restorationIdentifiers[visit.destinationIdentifier] ?: ""
             TurboVisitAction.ADVANCE -> ""
@@ -490,6 +500,7 @@ class TurboSession constructor(
     }
 
     private fun visitLocationAsColdBoot(visit: TurboVisit) {
+      Log.d("visitLocationAsColdBoot", "in TurboVisit")
         logEvent("visitLocationAsColdBoot", "location" to visit.location)
         isColdBooting = true
 
@@ -506,12 +517,14 @@ class TurboSession constructor(
 
     private fun visitPendingLocation(visit: TurboVisit) {
         logEvent("visitPendingLocation", "location" to visit.location)
+        Log.d("visitPendingLocation", "in TurboVisit")
         visitLocation(visit)
         visitPending = false
     }
 
     private fun renderVisitForColdBoot() {
         logEvent("renderVisitForColdBoot", "coldBootVisitIdentifier" to coldBootVisitIdentifier)
+        Log.d("renderVisitForColdBoot", "in TurboVisit")
         webView.visitRenderedForColdBoot(coldBootVisitIdentifier)
 
         currentVisit?.let { visit ->
@@ -667,6 +680,7 @@ class TurboSession constructor(
             val isHttpRequest = request.isHttpGetRequest()
             val isColdBootRedirect = isHttpRequest && isColdBooting && currentVisit?.location != location
             val shouldOverride = isReady || isColdBootRedirect
+            Log.d("shouldOverrideUrlLoading", "in start")
 
             // Don't allow onPageFinished to process its
             // callbacks if a cold boot was blocked.
@@ -711,10 +725,12 @@ class TurboSession constructor(
         }
 
         override fun onReceivedHttpAuthRequest(view: WebView, handler: HttpAuthHandler, host: String, realm: String) {
+          Log.d("onReceivedHttpAuthRequest", "in TurboVisit")
             callback { it.onReceivedHttpAuthRequest(handler, host, realm) }
         }
 
         override fun shouldInterceptRequest(view: WebView, request: WebResourceRequest): WebResourceResponse? {
+          Log.d("shouldInterceptRequest", "in TurboVisit")
             return requestInterceptor.interceptRequest(request)
         }
 

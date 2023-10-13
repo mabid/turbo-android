@@ -3,6 +3,7 @@ package dev.hotwire.turbo.nav
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.NavBackStackEntry
+import android.util.Log
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavOptions
@@ -41,6 +42,7 @@ internal class TurboNavigator(private val navDestination: TurboNavDestination) {
         bundle: Bundle? = null,
         extras: FragmentNavigator.Extras? = null
     ) {
+        Log.d("navigate", "in Turbonavigator")
 
         if (!shouldNavigate(location)) {
             return
@@ -102,6 +104,7 @@ internal class TurboNavigator(private val navDestination: TurboNavDestination) {
             "location" to rule.newLocation,
             "presentation" to rule.newPresentation
         )
+        Log.d("navigateWithinContext", "in Turbonavigator")
 
         when (rule.newPresentation) {
             TurboNavPresentation.POP -> onNavigationVisit {
@@ -127,6 +130,7 @@ internal class TurboNavigator(private val navDestination: TurboNavDestination) {
     }
 
     private fun navigateToModalContext(rule: TurboNavRule) {
+        Log.d("navigateToModalContext", "in Turbonavigator ")
         logEvent(
             "navigateToModalContext",
             "location" to rule.newLocation
@@ -214,6 +218,7 @@ internal class TurboNavigator(private val navDestination: TurboNavDestination) {
         // Save the VisitOptions so it can be retrieved by the next
         // destination. When response.responseHTML is present it is
         // too large to save directly within the args bundle.
+        Log.d("navigateToLocation", "in Turbonavigator ")
         navDestination.delegate().sessionViewModel.saveVisitOptions(rule.newVisitOptions)
 
         rule.newDestination?.let {
@@ -263,6 +268,7 @@ internal class TurboNavigator(private val navDestination: TurboNavDestination) {
     }
 
     private fun shouldNavigate(location: String): Boolean {
+        Log.d("shouldNavigate", "in Turbonavigator ")
         val shouldNavigate = navDestination.shouldNavigateTo(location)
 
         logEvent(

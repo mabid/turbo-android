@@ -25,6 +25,7 @@ import dev.hotwire.turbo.session.TurboSessionNavHostFragment
 import dev.hotwire.turbo.visit.TurboVisitOptions
 import java.net.MalformedURLException
 import java.net.URL
+import android.util.Log
 
 /**
  * The primary interface that a navigable Fragment implements to provide the library with
@@ -131,6 +132,7 @@ interface TurboNavDestination {
      * Turbo navigation flow).
      */
     fun shouldNavigateTo(newLocation: String): Boolean {
+        Log.d("shouldNavigateTo", "in Navigate")
         return try {
             URL(newLocation)
             true
@@ -154,6 +156,7 @@ interface TurboNavDestination {
         bundle: Bundle? = null,
         extras: FragmentNavigator.Extras? = null
     ) {
+        Log.d("navigate", "in Navigate")
         navigator.navigate(location, options, bundle, extras)
     }
 
@@ -166,6 +169,7 @@ interface TurboNavDestination {
         newLocation: String,
         newPathProperties: TurboPathConfigurationProperties
     ): NavOptions {
+        Log.d("getNavigationOptions", "in Navigate")
         return navOptions {
             anim {
                 enter = R.anim.nav_default_enter_anim

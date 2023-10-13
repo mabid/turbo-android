@@ -735,7 +735,6 @@ class TurboSession constructor(
 
         override fun shouldInterceptRequest(view: WebView, request: WebResourceRequest): WebResourceResponse? {
           val location = request.url.toString()
-          Log.d("shouldInterceptRequest", "in TurboVisit $location")
             return requestInterceptor.interceptRequest(request)
         }
 

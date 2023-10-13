@@ -671,6 +671,7 @@ class TurboSession constructor(
             // Don't allow onPageFinished to process its
             // callbacks if a cold boot was blocked.
             if (isColdBootRedirect) {
+              Log.d("shouldOverrideUrlLoading", "isColdBootRedirect")
                 logEvent("coldBootRedirect", "location" to location)
                 reset()
             }

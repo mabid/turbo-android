@@ -8,6 +8,7 @@ import android.webkit.WebView
 import dev.hotwire.turbo.session.TurboSession
 import dev.hotwire.turbo.util.toJson
 import dev.hotwire.turbo.visit.TurboVisitOptions
+import android.util.Log
 
 open class TurboWebChromeClient(val session: TurboSession) : WebChromeClient() {
     override fun onShowFileChooser(
@@ -26,6 +27,7 @@ open class TurboWebChromeClient(val session: TurboSession) : WebChromeClient() {
         webView.requestFocusNodeHref(message)
 
         message.data.getString("url")?.let {
+            Log.d("CHUTIYAPA", "in TurboWebChromeClient")
             session.visitProposedToLocation(
                 location = it,
                 optionsJson = TurboVisitOptions().toJson()

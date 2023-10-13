@@ -99,10 +99,10 @@
 
     visitProposedToLocation(location, options) {
       if (window.Turbo && typeof Turbo.navigator.locationWithActionIsSamePage === "function") {
-        if (Turbo.navigator.locationWithActionIsSamePage(location, options.action)) {
-          Turbo.navigator.view.scrollToAnchorFromLocation(location)
-          return
-        }
+        // if (Turbo.navigator.locationWithActionIsSamePage(location, options.action)) {
+        //   Turbo.navigator.view.scrollToAnchorFromLocation(location)
+        //   return
+        // }
       }
 
       // TurboSession.visitProposedToLocation(location.toString(), JSON.stringify(options))
@@ -110,7 +110,7 @@
 
     // Turbolinks 5
     visitProposedToLocationWithAction(location, action) {
-      this.visitProposedToLocation(location, { action })
+      // this.visitProposedToLocation(location, { action })
     }
 
     visitStarted(visit) {

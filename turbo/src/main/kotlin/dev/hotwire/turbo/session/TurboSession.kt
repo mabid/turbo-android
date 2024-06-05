@@ -722,6 +722,7 @@ class TurboSession constructor(
               Log.d("CHUTIYAPA", "SHAGUFTA")
 
               val intent = Intent(Intent.ACTION_VIEW, Uri.parse(location))
+              intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
               view.context.startActivity(intent)
             }
 
